@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ⏱️ PRE – Proyección de Resultados Electorales
 
-## Getting Started
+Una herramienta de análisis y visualización de datos electorales históricos de Argentina, diseñada para identificar mesas testigo y proyectar resultados con un alto grado de precisión.
 
-First, run the development server:
+## Sobre el Proyecto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+PRE nace de la necesidad de obtener proyecciones electorales rápidas y fiables durante la jornada electoral. En lugar de depender de encuestas, este proyecto utiliza datos históricos de elecciones nacionales (2011-2023) para identificar un conjunto de **mesas testigo** en cada distrito.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Estas mesas son aquellas que, a lo largo de más de una década, han demostrado ser un microcosmos del resultado general de su jurisdicción. El sitio permite visualizar y comparar el resultado agregado de estas mesas testigo contra el resultado real de cada elección, mostrando un **porcentaje de error promedio** que cuantifica la efectividad del modelo.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📜 Características Principales
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Análisis por Jurisdicción:** Visualización de datos para las 23 provincias, la Ciudad Autónoma de Buenos Aires y un consolidado de "Total País".
+* **Selector Histórico:** Permite navegar entre diferentes años electorales para analizar la evolución de los resultados.
+* **Visualización Comparativa:** Gráficos de barras interactivos que enfrentan los "Resultados Reales" contra los "Resultados de Mesas Testigo", expresados en porcentajes para una comparación precisa.
+* **Cálculo de Precisión:** Tarjetas de métricas que muestran de forma clara el **error promedio** de la proyección para el año seleccionado.
+* **Descarga de Datos Premium (En Desarrollo):** Funcionalidad para que los usuarios puedan comprar y descargar los listados completos de mesas testigo para sus propios análisis.
+* **Suscripción a Novedades (En Desarrollo):** Un formulario de registro para que los usuarios reciban la agenda electoral y actualizaciones del sitio.
 
-## Learn More
+## 🚀 Stack Tecnológico
 
-To learn more about Next.js, take a look at the following resources:
+Este proyecto fue construido utilizando un enfoque moderno y simplificado.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Análisis de Datos:** Python, Pandas, Google Colab.
+* **Aplicación Web (Frontend):**
+    * Framework: **Next.js (React)**
+    * Estilos: **Tailwind CSS**
+    * Gráficos: **Chart.js**
+* **Entorno de Desarrollo:** GitHub Codespaces
+* **Plataforma de Despliegue:** Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚙️ Desarrollo
 
-## Deploy on Vercel
+Para correr este proyecto en un entorno de desarrollo local o en Codespaces:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1.  Clona el repositorio.
+2.  Instala las dependencias:
+    ```bash
+    npm install
+    ```
+3.  Ejecuta el servidor de desarrollo:
+    ```bash
+    npm run dev
+    ```
+4.  Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Despliegue
+
+El sitio está desplegado en Vercel y se actualiza automáticamente con cada `git push` a la rama `main`.
+
+**URL de Producción:** [https://proyeccion-resultados-electorales.vercel.app/](https://proyeccion-resultados-electorales.vercel.app/)
+
+## 🛣️ Próximos Pasos
+
+El desarrollo de las siguientes funcionalidades está en progreso:
+* [ ] Integración de la pasarela de pagos con **Stripe**.
+* [ ] Conexión del formulario de suscripción a un servicio de email marketing.
+* [ ] Creación de páginas estáticas adicionales ("Metodología", "Servicios").
