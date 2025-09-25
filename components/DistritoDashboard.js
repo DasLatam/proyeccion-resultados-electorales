@@ -20,12 +20,18 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
     };
 
     const datosProcesados = useMemo(() => {
-        if (!datos || !datos.real) return null;
-        const datosRealesAño = datos.real[añoSeleccionado] || {};
-        const datosTestigoAño = datos.testigo[añoSeleccionado] || {};
+        if (!datos) return null;
+
+        // --- CORRECCIÓN CLAVE AQUÍ ---
+        // Verificamos que datos.real y datos.testigo existan antes de acceder a ellos.
+        const datosRealesAño = (datos.real && datos.real[añoSeleccionado]) ? datos.real[añoSeleccionado] : {};
+        const datosTestigoAño = (datos.testigo && datos.testigo[añoSeleccionado]) ? datos.testigo[añoSeleccionado] : {};
+
         const pctReales = calcularPorcentajes(datosRealesAño);
         const pctTestigo = calcularPorcentajes(datosTestigoAño);
+        
         const todosLosPartidos = [...new Set([...Object.keys(pctReales), ...Object.keys(pctTestigo)])].sort();
+        
         let errorAcumulado = 0;
         todosLosPartidos.forEach(partido => {
             errorAcumulado += Math.abs((pctReales[partido] || 0) - (pctTestigo[partido] || 0));
@@ -37,9 +43,10 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
             datasets: [{
                 label: 'Porcentaje de Votos (%)',
                 data: todosLosPartidos.map(p => porcentajes[p] || 0),
-                backgroundColor: todosLosPartidos.map(p => colores[p.trim()] || '#cccccc'), // .trim() para limpiar espacios
+                backgroundColor: todosLosPartidos.map(p => (colores[p.trim()] || '#cccccc')),
             }]
         });
+
         return {
             errorPromedio,
             chartDataReal: prepararDatosGrafico(pctReales),
@@ -47,7 +54,9 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
         };
     }, [datos, añoSeleccionado, colores]);
 
-    if (!datosProcesados) return <main className="p-8 bg-slate-100"><p className="text-center p-10">No hay datos disponibles para este distrito.</p></main>;
+    if (!datosProcesados) {
+        return <main className="p-8 bg-slate-100"><p className="text-center p-10">No hay datos procesados para mostrar.</p></main>;
+    }
 
     return (
         <main className="p-4 md:p-8 bg-slate-100 font-sans min-h-screen">
@@ -76,7 +85,11 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-md">
                     <h3 className="text-xl font-bold mb-4 text-center">Resultados Mesas Testigo (%)</h3>
-                    <BarChart chartData={datosProcesados.chartDataTestigo} />
+                    {/* Verificamos si hay datos antes de renderizar el gráfico */}
+                    {Object.keys(datos.testigo || {}).length > 0 ?
+                      <BarChart chartData={datosProcesados.chartDataTestigo} /> :
+                      <p className="text-center text-slate-500 mt-10">No hay datos de mesas testigo para este distrito.</p>
+                    }
                 </div>
             </div>
             <div className="text-center my-10">
