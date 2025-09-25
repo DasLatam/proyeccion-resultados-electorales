@@ -1,5 +1,4 @@
-'use client'; // <-- La directiva al principio, como debe ser.
-
+'use client';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import BarChart from '@/components/BarChart';
@@ -32,13 +31,13 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
             errorAcumulado += Math.abs((pctReales[partido] || 0) - (pctTestigo[partido] || 0));
         });
         const errorPromedio = todosLosPartidos.length > 0 ? errorAcumulado / todosLosPartidos.length : 0;
-
+        
         const prepararDatosGrafico = (porcentajes) => ({
             labels: todosLosPartidos,
             datasets: [{
                 label: 'Porcentaje de Votos (%)',
                 data: todosLosPartidos.map(p => porcentajes[p] || 0),
-                backgroundColor: todosLosPartidos.map(p => colores[p] || '#cccccc'),
+                backgroundColor: todosLosPartidos.map(p => colores[p.trim()] || '#cccccc'), // .trim() para limpiar espacios
             }]
         });
         return {
@@ -48,7 +47,7 @@ export default function DistritoDashboard({ datosIniciales, distrito }) {
         };
     }, [datos, añoSeleccionado, colores]);
 
-    if (!datosProcesados) return <p className="text-center p-10">No hay datos disponibles para este distrito.</p>;
+    if (!datosProcesados) return <main className="p-8 bg-slate-100"><p className="text-center p-10">No hay datos disponibles para este distrito.</p></main>;
 
     return (
         <main className="p-4 md:p-8 bg-slate-100 font-sans min-h-screen">
